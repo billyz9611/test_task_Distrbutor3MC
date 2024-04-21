@@ -193,7 +193,7 @@ describe("Distributor3MC", function () {
     });
 
     it("if claimRoot == bytes32(0), toggleActive should not be allowed, vice versa ", async function () {
-      const { distributor3MC, owner, tester1 } = await loadFixture(
+      const { distributor3MC, owner } = await loadFixture(
         deployOneYearLockFixture
       );
       await distributor3MC.connect(owner).setClaimRoot(ethers.ZeroHash);
@@ -220,7 +220,7 @@ describe("Distributor3MC", function () {
     });
 
     it("if msg value < fee, claim should be reverted", async function () {
-      const { ape, distributor3MC, tester1, user_token_balance, proof1 } =
+      const { distributor3MC, tester1, user_token_balance, proof1 } =
         await loadFixture(deployOneYearLockFixture);
       await expect(
         distributor3MC
@@ -230,7 +230,7 @@ describe("Distributor3MC", function () {
     });
 
     it("if user have claimed, claim again should be reverted", async function () {
-      const { ape, distributor3MC, tester1, user_token_balance, proof1 } =
+      const { distributor3MC, tester1, user_token_balance, proof1 } =
         await loadFixture(deployOneYearLockFixture);
       await distributor3MC
         .connect(tester1)
@@ -244,7 +244,6 @@ describe("Distributor3MC", function () {
 
     it("if contract balance < claim amount, claim should be reverted", async function () {
       const {
-        ape,
         distributor3MC,
         tester1,
         tester2,
@@ -268,17 +267,8 @@ describe("Distributor3MC", function () {
     });
 
     it("if contract status is not active, claim should be reverted, vice versa", async function () {
-      const {
-        ape,
-        distributor3MC,
-        tester1,
-        tester2,
-        tester3,
-        user_token_balance,
-        proof1,
-        proof2,
-        proof3,
-      } = await loadFixture(deployOneYearLockFixture);
+      const { distributor3MC, tester1, user_token_balance, proof1 } =
+        await loadFixture(deployOneYearLockFixture);
       await distributor3MC.toggleActive();
       await expect(
         distributor3MC
@@ -293,17 +283,8 @@ describe("Distributor3MC", function () {
     });
 
     it("if user claim successfully,merkleProofs and nonces should be updated", async function () {
-      const {
-        ape,
-        distributor3MC,
-        tester1,
-        tester2,
-        tester3,
-        user_token_balance,
-        proof1,
-        proof2,
-        proof3,
-      } = await loadFixture(deployOneYearLockFixture);
+      const { distributor3MC, tester1, user_token_balance, proof1 } =
+        await loadFixture(deployOneYearLockFixture);
       expect(await distributor3MC.nonces(tester1.address)).to.be.eq(0);
       expect(
         await distributor3MC.merkleProofs(
@@ -322,17 +303,8 @@ describe("Distributor3MC", function () {
     });
 
     it("if user proof is incorrect, claim should be reverted, vice versa", async function () {
-      const {
-        ape,
-        distributor3MC,
-        tester1,
-        tester2,
-        tester3,
-        user_token_balance,
-        proof1,
-        proof2,
-        proof3,
-      } = await loadFixture(deployOneYearLockFixture);
+      const { distributor3MC, tester1, user_token_balance, proof1, proof2 } =
+        await loadFixture(deployOneYearLockFixture);
       await expect(
         distributor3MC
           .connect(tester1)
@@ -346,17 +318,8 @@ describe("Distributor3MC", function () {
     });
 
     it("if user claim successfully, will receive the token from contract", async function () {
-      const {
-        ape,
-        distributor3MC,
-        tester1,
-        tester2,
-        tester3,
-        user_token_balance,
-        proof1,
-        proof2,
-        proof3,
-      } = await loadFixture(deployOneYearLockFixture);
+      const { ape, distributor3MC, tester1, user_token_balance, proof1 } =
+        await loadFixture(deployOneYearLockFixture);
       const before_token_balance = await ape.balanceOf(tester1);
       expect(
         await distributor3MC
@@ -369,17 +332,8 @@ describe("Distributor3MC", function () {
     });
 
     it("if user claim successfully, will emit AirdropClaimed event", async function () {
-      const {
-        ape,
-        distributor3MC,
-        tester1,
-        tester2,
-        tester3,
-        user_token_balance,
-        proof1,
-        proof2,
-        proof3,
-      } = await loadFixture(deployOneYearLockFixture);
+      const { ape, distributor3MC, tester1, user_token_balance, proof1 } =
+        await loadFixture(deployOneYearLockFixture);
       const before_token_balance = await ape.balanceOf(tester1);
       await expect(
         distributor3MC
