@@ -4,7 +4,9 @@ coverage
 coverage.json
 typechain
 typechain-types
-
+.idea
+tsconfig.json
+package-lock.json
 # Hardhat files
 cache
 artifacts
