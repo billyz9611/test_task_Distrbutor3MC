@@ -51,7 +51,7 @@ npx hardhat run scripts/deploy.ts # deploy Distributor3MC contract on lock block
         1. if value < fee, will cannot claim and raise err 'InsufficientFee.
 
 1. if user have claimed, claim again should be reverted
-       * Test points :
+    * Test points :
         1. if user have claimed and claim again, will cannot claim and raise err 'AlreadyClaimed'.
 1. if contract balance < claim amount, claim should be reverted
     * Test points :
